@@ -53,6 +53,21 @@ Each query was written to answer a specific business question:
 
 ---
 
+## Dataset
+
+The dataset used in this project was sourced from the SQL course by **Luke Barousse**.
+It contains real-world job postings data for data-related roles in 2023, including:
+- Job titles, locations, salaries, and schedule types
+- Company information
+- Skills associated with each job posting
+
+You can access the dataset here: [Luke Barousse's SQL Course](https://lukebarousse.com/sql)
+
+> Note: The raw CSV files are not included in this repo due to their size (197MB).
+> Download them directly from the link above.
+
+---
+
 ## The Analysis
 
 ### Query 1 — Top Paying Remote Data Analyst Jobs
