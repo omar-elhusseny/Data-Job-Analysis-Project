@@ -7,6 +7,7 @@
  */
 WITH most_demanded_skills AS (
     SELECT
+        skills_dim.skill_id,
         skills_dim.skills,
         COUNT(skills_job_dim.job_id) AS demand_count
     FROM job_postings_fact
@@ -16,12 +17,12 @@ WITH most_demanded_skills AS (
         job_title_short = 'Data Analyst'
         AND salary_year_avg IS NOT NULL
         AND job_work_from_home = True
-    GROUP BY skills_dim.skills
+    GROUP BY skills_dim.skill_id
 ),
 
 top_paying_skills AS (
     SELECT
-        skills_dim.skills,
+        skills_job_dim.skill_id,
         ROUND(AVG(salary_year_avg), 0) AS avg_salary
     FROM job_postings_fact
     INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
@@ -30,15 +31,16 @@ top_paying_skills AS (
         job_title_short = 'Data Analyst'
         AND salary_year_avg IS NOT NULL
         AND job_work_from_home = True
-    GROUP BY skills_dim.skills
+    GROUP BY skills_job_dim.skill_id
 )
 
 SELECT
+    most_demanded_skills.skill_id,
     most_demanded_skills.skills,
     demand_count,
     avg_salary
 FROM most_demanded_skills
-INNER JOIN top_paying_skills ON most_demanded_skills.skills = top_paying_skills.skills
+INNER JOIN top_paying_skills ON most_demanded_skills.skill_id = top_paying_skills.skill_id
 WHERE
     demand_count > 10
 ORDER BY 
